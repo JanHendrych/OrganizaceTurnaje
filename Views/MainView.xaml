@@ -34,9 +34,11 @@
         
         <StackPanel Orientation = "Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" >
             <Button Command="{Binding NewTournamentCommand}" Content="Vytvořit nový turnaj" Width="150" Margin="10,10,10,10" Padding="0,4,0,4" FontSize="14"/>
-            <Button Command="{Binding DeleteTournamentCommand}" Content="Smazat turnaj" Width="150" Margin="10,10,10,10" Padding="0,4,0,4" FontSize="14"/>
+            <Button Command="{Binding DeleteTournamentCommand}" Content="Smazat turnaj" Width="150" Margin="10,10,10,10" Padding="0,4,0,4" FontSize="14" Background="#FFFF8181"/>
+            <Button Command="{Binding ShowTournamentCommand}" Content="Zobraz Turnaj" Width="150" Margin="10,10,10,10" Padding="0,4,0,4" FontSize="14"/>
+            <Button Command="{Binding SaveTournamentsCommand}" Content="Uložit" Width="150" Margin="10,10,10,10" Padding="0,4,0,4" FontSize="14"/>
+            <Button Command="{Binding LoadTournamentsCommand}" Content="Načíst" Width="150" Margin="10,10,10,10" Padding="0,4,0,4" FontSize="14"/>
         </StackPanel>
-
 
     </StackPanel>
 </UserControl>

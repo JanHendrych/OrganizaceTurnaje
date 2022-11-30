@@ -13,6 +13,7 @@ namespace OrganizaceTurnaje.Model
     public class Tournament : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
+        public int ID { get; set; }
         public string Name { get; set; }
         private List<Player> players = new List<Player>();
         public List<Player> Players {

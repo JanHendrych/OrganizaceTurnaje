@@ -1,0 +1,22 @@
+﻿<Window x:Class="OrganizaceTurnaje.Views.InfoTournament"
+        x:Name="InfoTournamentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OrganizaceTurnaje.Views"
+        xmlns:uc="clr-namespace:OrganizaceTurnaje.Views"
+        mc:Ignorable="d"
+        Title="InfoTournament" Height="450" Width="450">
+    <Grid>
+        <uc:InfoTournamentControl />
+        <Button Content="Potvrdit" 
+                Height="30" 
+                Width="100" 
+                Margin="10,10,10,10" 
+                IsCancel="True" 
+                VerticalAlignment="Bottom" 
+                HorizontalAlignment="Center"
+                Command="{Binding OnConfirmChanges}" />
+    </Grid>
+</Window>

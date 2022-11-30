@@ -10,7 +10,7 @@ namespace OrganizaceTurnaje.Model
     public class PlayerModel { }
     public class Player : INotifyPropertyChanged
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         private string firstName;
         private string lastName;
 
@@ -46,12 +46,17 @@ namespace OrganizaceTurnaje.Model
                 }
             }
         }
+        public string FullName{ get; set; }
+        public Player()
+        {
 
+        }
         public Player(int id, string firstName, string lastName)
         {
             Id = id;
             FirstName = firstName;
             LastName = lastName;
+            FullName = firstName+ " " + lastName;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -67,6 +72,6 @@ namespace OrganizaceTurnaje.Model
         public override string? ToString()
         {
             return $"{firstName} {lastName}";
-        }
+        }        
     }
 }
