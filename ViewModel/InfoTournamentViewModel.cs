@@ -17,6 +17,7 @@ namespace OrganizaceTurnaje.ViewModel
         public string Name { get; set; }
         public ObservableCollection<Player> Players { get; set; }
         public MyICommand AddPlayerCommand { get; set; }
+        public MyICommand DeletePlayerCommand { get; set; }
 
         public InfoTournamentViewModel()
         {
@@ -34,14 +35,31 @@ namespace OrganizaceTurnaje.ViewModel
 
             Name = tournament.Name;
             Players = new ObservableCollection<Player>();
-            
+
             foreach (Player player in tournament.Players)
             {
                 Players.Add(player);
             }
 
             AddPlayerCommand = new MyICommand(OnAddPlayer, CanAddPlayer);
+            DeletePlayerCommand = new MyICommand(OnDeletePlayer, CanDeletePlayer);
         }
+
+        private bool CanDeletePlayer()
+        {
+            return SelectedPlayer != null;
+        }
+
+        private void OnDeletePlayer()
+        {
+            MessageBoxResult result = MessageBox.Show($"Chcete opravdu smazat hráce {SelectedPlayer}?", "Potvrzení", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                Tournaments.First().Players.Remove(SelectedPlayer);
+                Players.Remove(SelectedPlayer);
+            }
+        }
+
         private bool CanConfirm()
         {
             return true;
@@ -54,10 +72,25 @@ namespace OrganizaceTurnaje.ViewModel
         private void OnAddPlayer()
         {
             Player player = new Player() { FirstName = "firstName", LastName = "lastname" };
-            
+
             Tournaments.First().AddPlayer(player);
             Players.Add(player);
-            
+
+        }
+        private Player selectedPlayer;
+
+        public Player SelectedPlayer
+        {
+            get
+            {
+                return selectedPlayer;
+            }
+
+            set
+            {
+                selectedPlayer = value;
+                DeletePlayerCommand.RaiseCanExecuteChanged();
+            }
         }
     }
 }

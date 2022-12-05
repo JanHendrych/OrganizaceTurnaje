@@ -23,11 +23,12 @@
         <StackPanel Orientation = "Horizontal">
             <StackPanel Orientation="Vertical">
                 <TextBlock Text = "{Binding Name, Mode = OneWay}" Width = "100" Margin = "3 5 3 5"/>
-                <ListBox ItemsSource = "{Binding Players}"/>
+                <ListBox ItemsSource = "{Binding Players}" SelectedItem = "{Binding SelectedPlayer}"/>
             </StackPanel>
 
             <StackPanel Orientation="Vertical">
                 <Button Command="{Binding AddPlayerCommand}" Content="Přidej hráče"></Button>
+                <Button Command="{Binding DeletePlayerCommand}" Content="Odeber hráče"></Button>
             </StackPanel>
         </StackPanel>
     </Grid>

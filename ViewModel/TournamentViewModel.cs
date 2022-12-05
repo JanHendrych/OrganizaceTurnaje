@@ -137,7 +137,7 @@ namespace OrganizaceTurnaje.ViewModel
             if (distinctPeople.Any() && NextTimeNotShow == false)
             {
                 MessageBoxResult msgResult = MessageBox.Show("V seznamu hráčů se objevují následující duplicity: \n" + message + "\n" + 
-                    "Každý duplicitní hráč je v celkové tabulce vítězů jako jeden hráč." + "\n\n" + "Příště nezobrazovat?"
+                    "Každý duplicitní hráč se v celkové tabulce vítězů zobrazí jako jeden hráč." + "\n\n" + "Příště nezobrazovat?"
                     ,"Varování",MessageBoxButton.YesNo,MessageBoxImage.Question);
                 if (msgResult == MessageBoxResult.Yes)
                 {
