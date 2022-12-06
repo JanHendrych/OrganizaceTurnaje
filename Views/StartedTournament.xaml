@@ -1,0 +1,17 @@
+﻿<Window x:Class="OrganizaceTurnaje.Views.StartedTournament"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OrganizaceTurnaje.Views"
+        xmlns:uc="clr-namespace:OrganizaceTurnaje.Views"
+        mc:Ignorable="d"
+        Title="StartedTournament"
+        WindowState="Maximized"
+        WindowStyle="SingleBorderWindow"
+        x:Name="startedTournament">
+    <StackPanel Orientation="Horizontal">
+        <uc:StartedTournamentControl />
+        <Button Command="{Binding FinishTournament}" Content="Ukonči turnaj"></Button>
+    </StackPanel>
+</Window>

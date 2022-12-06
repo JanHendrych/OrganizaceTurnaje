@@ -24,6 +24,8 @@
             </StackPanel>
 
         </DataTemplate>
+
+        
     </UserControl.Resources>
     
     <StackPanel Orientation = "Horizontal">
@@ -38,6 +40,8 @@
             <Button Command="{Binding ShowTournamentCommand}" Content="Zobraz Turnaj" Width="150" Margin="10,10,10,10" Padding="0,4,0,4" FontSize="14"/>
             <Button Command="{Binding SaveTournamentsCommand}" Content="Uložit" Width="150" Margin="10,10,10,10" Padding="0,4,0,4" FontSize="14"/>
             <Button Command="{Binding LoadTournamentsCommand}" Content="Načíst" Width="150" Margin="10,10,10,10" Padding="0,4,0,4" FontSize="14"/>
+            <Button Command="{Binding StartTournamentCommand}" Content="Odstartuj turnaj" Width="150" Margin="10,10,10,10" Padding="0,4,0,4" FontSize="14" Background="#FF96FF81"/>
+            <Button Command="{Binding ShowResultsCommand}" Content="Zobraz výsledky" Width="150" Margin="10,10,10,10" Padding="0,4,0,4" FontSize="14" Background="#FF81A0FF"/>
         </StackPanel>
 
     </StackPanel>

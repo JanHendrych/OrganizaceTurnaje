@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Input;
 
 namespace OrganizaceTurnaje.ViewModel
 {
@@ -21,6 +22,8 @@ namespace OrganizaceTurnaje.ViewModel
         public MyICommand SaveTournamentsCommand { get; set; }
         public MyICommand LoadTournamentsCommand { get; set; }
         public MyICommand ShowTournamentCommand { get; set; }
+        public MyICommand ShowResultsCommand { get; set; }
+        public MyICommand StartTournamentCommand { get; set; }
         public bool NextTimeNotShow { get; set; }
 
         public TournamentViewModel()
@@ -33,9 +36,58 @@ namespace OrganizaceTurnaje.ViewModel
             SaveTournamentsCommand = new MyICommand(OnSave, CanSave);
             LoadTournamentsCommand = new MyICommand(OnLoad, CanLoad);
             ShowTournamentCommand = new MyICommand(OnShow, CanShow);
+            ShowResultsCommand = new MyICommand(OnShowResults, CanShowResults);
+            StartTournamentCommand = new MyICommand(OnStartTournament, CanStartTournament);
 
             NextTimeNotShow = false;
         }
+
+        private bool CanStartTournament()
+        {
+            return SelectedTournament != null;
+        }
+
+        private void OnStartTournament()
+        {
+            if (SelectedTournament.Players.Count<2)
+            {
+                MessageBox.Show("Příliš nízký počet hráčů","Varování",MessageBoxButton.OK,MessageBoxImage.Error);
+                return;
+            }
+            MessageBoxResult result = MessageBox.Show($"Chcete opravdu odstartovat turnaj {SelectedTournament.Name}?", "Potvrzení", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                SelectedTournament.IsStarted = true;
+
+                StartedTournament startedTournament = new StartedTournament();
+
+                OrganizaceTurnaje.ViewModel.StartedTournamentViewModel viewModel =
+                        new OrganizaceTurnaje.ViewModel.StartedTournamentViewModel(SelectedTournament);
+
+                startedTournament.DataContext = viewModel;
+
+                startedTournament.ShowDialog();
+            }
+        }
+
+        private bool CanShowResults()
+        {
+            bool result = false;
+            foreach (var item in Tournaments)
+            {
+                if (item.IsStarted == true)
+                {
+                    result = true;
+                }
+            }
+            return result;
+        }
+
+        private void OnShowResults()
+        {
+            //TODO SHOW RESULTS
+        }
+
         private void OnAdd()
         {
             Tournaments.Add(new Tournament() { Name = "null" });
@@ -168,7 +220,14 @@ namespace OrganizaceTurnaje.ViewModel
                 selectedTournament = value;
                 DeleteTournamentCommand.RaiseCanExecuteChanged();
                 ShowTournamentCommand.RaiseCanExecuteChanged();
+                StartTournamentCommand.RaiseCanExecuteChanged();
+                ShowResultsCommand.RaiseCanExecuteChanged();
             }
+        }
+        protected void SelectCurrentItem(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            ListBoxItem item = (ListBoxItem)sender;
+            item.IsSelected = true;
         }
     }
 }

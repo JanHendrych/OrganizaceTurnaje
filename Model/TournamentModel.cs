@@ -28,7 +28,7 @@ namespace OrganizaceTurnaje.Model
                     RaisePropertyChanged("Players");  
             }
         }
-
+        public bool IsStarted { get; set; } = false;
         public void AddPlayer(Player player)
         {
             players.Add(player);
