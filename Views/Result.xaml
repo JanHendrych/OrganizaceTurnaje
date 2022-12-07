@@ -16,10 +16,25 @@
                 <TextBlock Text = "{Binding Points, Mode = OneWay}" Width = "100" Margin = "3 5 3 5"/>
             </StackPanel>
         </DataTemplate>
+        <DataTemplate DataType = "{x:Type data:PlayerScorePair}">
+            <StackPanel Orientation = "Horizontal">
+                <TextBlock Text = "{Binding PlayerPair, Mode = OneWay}" Width = "100" Margin = "3 5 3 5"/>
+
+                <TextBlock Text = "{Binding Score, Mode = OneWay}" Width = "100" Margin = "3 5 3 5"/>
+            </StackPanel>
+        </DataTemplate>
     </Window.Resources>
     
     
     <StackPanel Orientation="Horizontal">
-        <ListBox ItemsSource="{Binding Scores}"></ListBox>
+        <StackPanel Orientation="Vertical">
+            <TextBlock Text="Počet výher:"></TextBlock>
+            <ListBox ItemsSource="{Binding Scores}"></ListBox>
+        </StackPanel>
+        <StackPanel Orientation="Vertical">
+            <TextBlock Text="Počet Bodů:"></TextBlock>
+            <ListBox ItemsSource="{Binding Points}"></ListBox>
+        </StackPanel>
     </StackPanel>
+    
 </Window>
