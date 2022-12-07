@@ -49,5 +49,11 @@ namespace OrganizaceTurnaje.Model
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
             }
         }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Tournament tournament &&
+                   Name == tournament.Name;
+        }
     }
 }

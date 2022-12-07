@@ -1,4 +1,5 @@
 ﻿using OrganizaceTurnaje.Model;
+using OrganizaceTurnaje.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,22 @@ namespace OrganizaceTurnaje.Views
         public InfoTournament()
         {
             InitializeComponent();
+            Loaded += InfoTournament_Loaded;
+        }
+
+        private void InfoTournament_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is ICloseWindows vm)
+            {
+                vm.Close += () =>
+                {
+                    this.Close();
+                };
+                Closing += (s, e) =>
+                {
+                    e.Cancel = !vm.CanClose();
+                };
+            }
         }
     }
 }

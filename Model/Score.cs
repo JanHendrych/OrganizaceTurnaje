@@ -11,6 +11,7 @@ namespace OrganizaceTurnaje.Model
     {
         public Player Player { get; set; }
         public int? Points { get; set; } = 0;
+        public Tournament Tournament { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

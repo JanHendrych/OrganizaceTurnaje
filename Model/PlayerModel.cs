@@ -72,6 +72,13 @@ namespace OrganizaceTurnaje.Model
         public override string? ToString()
         {
             return $"{firstName} {lastName}";
-        }        
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Player player &&
+                   FirstName == player.FirstName &&
+                   LastName == player.LastName;
+        }
     }
 }

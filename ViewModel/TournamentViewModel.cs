@@ -49,7 +49,7 @@ namespace OrganizaceTurnaje.ViewModel
 
         private void OnStartTournament()
         {
-            if (SelectedTournament.Players.Count<2)
+            if (SelectedTournament.Players.Count<2 || SelectedTournament.IsStarted == true)
             {
                 MessageBox.Show("Příliš nízký počet hráčů","Varování",MessageBoxButton.OK,MessageBoxImage.Error);
                 return;
@@ -73,19 +73,23 @@ namespace OrganizaceTurnaje.ViewModel
         private bool CanShowResults()
         {
             bool result = false;
-            foreach (var item in Tournaments)
+            if (SelectedTournament is not null)
             {
-                if (item.IsStarted == true)
-                {
-                    result = true;
-                }
+                result = SelectedTournament.IsStarted;
             }
             return result;
         }
 
         private void OnShowResults()
         {
-            //TODO SHOW RESULTS
+            Result result = new Result();
+
+            OrganizaceTurnaje.ViewModel.ResultViewModel viewModel =
+                    new OrganizaceTurnaje.ViewModel.ResultViewModel(SelectedTournament);
+
+            result.DataContext = viewModel;
+
+            result.ShowDialog();
         }
 
         private void OnAdd()

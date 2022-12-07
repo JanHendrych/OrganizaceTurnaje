@@ -87,6 +87,9 @@ namespace OrganizaceTurnaje.ViewModel
 
         private void OnEndTournament()
         {
+            Points.Clear();
+            Scores.Clear();
+
             //Přiřazení vítězů
             foreach (var round in Rounds)
             {
@@ -110,7 +113,7 @@ namespace OrganizaceTurnaje.ViewModel
                     }
                     else
                     {
-                        Scores.Add(new Score() { Player = round.Winner, Points = 1 });
+                        Scores.Add(new Score() { Player = round.Winner, Points = 1, Tournament = Tournament });
                     }
                     var sortedList = Scores.OrderByDescending(x => x.Points).ToList();
                     Scores.Clear();
