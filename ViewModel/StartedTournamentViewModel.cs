@@ -54,7 +54,7 @@ namespace OrganizaceTurnaje.ViewModel
                 MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
-                using (var db = new LiteDatabase("Score.db"))
+                using (var db = new LiteDatabase("Database/Score.db"))
                 {
                     var column = db.GetCollection<Score>("score");
 
@@ -64,7 +64,7 @@ namespace OrganizaceTurnaje.ViewModel
                     }
                     column.EnsureIndex(x => x.Player);
                 }
-                using (var db = new LiteDatabase("PlayerScorePair.db"))
+                using (var db = new LiteDatabase("Database/PlayerScorePair.db"))
                 {
                     var column = db.GetCollection<PlayerScorePair>("playerScorePair");
 

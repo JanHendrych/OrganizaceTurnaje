@@ -6,11 +6,13 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace OrganizaceTurnaje.ViewModel
 {
@@ -49,9 +51,9 @@ namespace OrganizaceTurnaje.ViewModel
 
         private void OnStartTournament()
         {
-            if (SelectedTournament.Players.Count<2 || SelectedTournament.IsStarted == true)
+            if (SelectedTournament.Players.Count < 2 || SelectedTournament.IsStarted == true)
             {
-                MessageBox.Show("Příliš nízký počet hráčů","Varování",MessageBoxButton.OK,MessageBoxImage.Error);
+                MessageBox.Show("Příliš nízký počet hráčů", "Varování", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             MessageBoxResult result = MessageBox.Show($"Chcete opravdu odstartovat turnaj {SelectedTournament.Name}?", "Potvrzení", MessageBoxButton.YesNo, MessageBoxImage.Question);
@@ -69,7 +71,8 @@ namespace OrganizaceTurnaje.ViewModel
                 if (viewModel.ClosedByButton == true)
                 {
                     SelectedTournament.IsStarted = true;
-                } else
+                }
+                else
                 {
                     MessageBox.Show("Nesprávné uzavření formuláře! \n Data nebyla uložena!", "Varování", MessageBoxButton.OK, MessageBoxImage.Error);
                     SelectedTournament.IsStarted = false;
@@ -124,17 +127,21 @@ namespace OrganizaceTurnaje.ViewModel
 
         private void OnSave()
         {
-            using (var db = new LiteDatabase("tournaments.db"))
+            Thread thread = new Thread(() =>
             {
-                var column = db.GetCollection<Tournament>("tournament");
-                column.DeleteAll();
-
-                foreach (var item in Tournaments)
+                using (var db = new LiteDatabase("Database/tournaments.db"))
                 {
-                    column.Insert(item);
+                    var column = db.GetCollection<Tournament>("tournament");
+                    column.DeleteAll();
+
+                    foreach (var item in Tournaments)
+                    {
+                        column.Insert(item);
+                    }
+                    column.EnsureIndex(x => x.Name);
                 }
-                column.EnsureIndex(x => x.Name);
-            }
+            });
+            thread.Start();
         }
         private bool CanSave()
         {
@@ -143,24 +150,32 @@ namespace OrganizaceTurnaje.ViewModel
 
         private void OnLoad()
         {
-            using (var db = new LiteDatabase("tournaments.db"))
+            Tournaments.Clear();
+
+            Thread thread = new Thread(() =>
             {
-                var column = db.GetCollection<Tournament>("tournament");
-
-                var result = column.Query().ToList();
-                Tournaments.Clear();
-
-                ObservableCollection<Tournament> tournaments = new ObservableCollection<Tournament>();
-
-                foreach (var item in result)
+                using (var db = new LiteDatabase("Database/tournaments.db"))
                 {
-                    tournaments.Add(item);
+                    var column = db.GetCollection<Tournament>("tournament");
+
+                    var result = column.Query().ToList();
+
+                    ObservableCollection<Tournament> tournaments = new ObservableCollection<Tournament>();
+
+                    foreach (var item in result)
+                    {
+                            tournaments.Add(item);
+                    }
+                    foreach (var item in tournaments)
+                    {
+                        App.Current.Dispatcher.Invoke(() =>
+                        {
+                            Tournaments.Add(item);
+                        });
+                    }
                 }
-                foreach (var item in tournaments)
-                {
-                    Tournaments.Add(item);
-                }
-            }
+            });
+            thread.Start();
         }
         private bool CanLoad()
         {
@@ -188,20 +203,20 @@ namespace OrganizaceTurnaje.ViewModel
                     allPlayers.Add(player);
                 }
             }
-            
+
             var distinctPeople = allPlayers
                                           .GroupBy(p => new { p.FirstName, p.LastName })
                                           .Where(g => g.Count() > 1)
                                           .Select(g => g.First())
                                           .ToList();
-            
+
             var message = string.Join(Environment.NewLine, distinctPeople);
 
             if (distinctPeople.Any() && NextTimeNotShow == false)
             {
-                MessageBoxResult msgResult = MessageBox.Show("V seznamu hráčů se objevují následující duplicity: \n" + message + "\n" + 
+                MessageBoxResult msgResult = MessageBox.Show("V seznamu hráčů se objevují následující duplicity: \n" + message + "\n" +
                     "Každý duplicitní hráč se v celkové tabulce vítězů zobrazí jako jeden hráč." + "\n\n" + "Příště nezobrazovat?"
-                    ,"Varování",MessageBoxButton.YesNo,MessageBoxImage.Question);
+                    , "Varování", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (msgResult == MessageBoxResult.Yes)
                 {
                     NextTimeNotShow = true;

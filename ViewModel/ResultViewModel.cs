@@ -43,7 +43,7 @@ namespace OrganizaceTurnaje.ViewModel
 
         private void LoadScore()
         {
-            using (var db = new LiteDatabase("Score.db"))
+            using (var db = new LiteDatabase("Database/Score.db"))
             {
                 var column = db.GetCollection<Score>("score");
 
@@ -70,7 +70,7 @@ namespace OrganizaceTurnaje.ViewModel
         }
         private void LoadPoints()
         {
-            using (var db = new LiteDatabase("PlayerScorePair.db"))
+            using (var db = new LiteDatabase("Database/PlayerScorePair.db"))
             {
                 var column = db.GetCollection<PlayerScorePair>("playerScorePair");
 
