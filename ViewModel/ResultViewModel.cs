@@ -88,7 +88,7 @@ namespace OrganizaceTurnaje.ViewModel
                 var sortedList = AllPoints.OrderByDescending(x => x.Score).ToList();
                 foreach (var item in sortedList)
                 {
-                    if (SelectedTournament.Players.Contains(item.PlayerPair))
+                    if (item.Tournament.Equals(SelectedTournament))
                     {
                         Points.Add(item);
                     }

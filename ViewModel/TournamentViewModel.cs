@@ -44,7 +44,7 @@ namespace OrganizaceTurnaje.ViewModel
 
         private bool CanStartTournament()
         {
-            return SelectedTournament != null;
+            return SelectedTournament != null && SelectedTournament?.IsStarted != true && SelectedTournament?.Players.Count >= 2;
         }
 
         private void OnStartTournament()
@@ -57,8 +57,6 @@ namespace OrganizaceTurnaje.ViewModel
             MessageBoxResult result = MessageBox.Show($"Chcete opravdu odstartovat turnaj {SelectedTournament.Name}?", "Potvrzení", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
-                SelectedTournament.IsStarted = true;
-
                 StartedTournament startedTournament = new StartedTournament();
 
                 OrganizaceTurnaje.ViewModel.StartedTournamentViewModel viewModel =
@@ -67,6 +65,15 @@ namespace OrganizaceTurnaje.ViewModel
                 startedTournament.DataContext = viewModel;
 
                 startedTournament.ShowDialog();
+
+                if (viewModel.ClosedByButton == true)
+                {
+                    SelectedTournament.IsStarted = true;
+                } else
+                {
+                    MessageBox.Show("Nesprávné uzavření formuláře! \n Data nebyla uložena!", "Varování", MessageBoxButton.OK, MessageBoxImage.Error);
+                    SelectedTournament.IsStarted = false;
+                }
             }
         }
 

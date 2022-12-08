@@ -20,6 +20,7 @@ namespace OrganizaceTurnaje.ViewModel
         public MyICommand FinishTournamentCommand { get; set; }
         public MyICommand FinishTournament { get; set; }
         private bool canFinish;
+        public bool ClosedByButton { get; set; } = false;
         public StartedTournamentViewModel()
         {
 
@@ -35,6 +36,8 @@ namespace OrganizaceTurnaje.ViewModel
 
             FinishTournament = new MyICommand(OnCloseTournament, CanCloseTournament);
 
+            ClosedByButton = false;
+
             canFinish = false;
 
             CreateRounds();
@@ -42,7 +45,7 @@ namespace OrganizaceTurnaje.ViewModel
 
         private bool CanCloseTournament()
         {
-            return true;
+            return canFinish;
         }
 
         private void OnCloseTournament()
@@ -71,7 +74,7 @@ namespace OrganizaceTurnaje.ViewModel
                     }
                     column.EnsureIndex(x => x.PlayerPair);
                 }
-
+                ClosedByButton = true;
                 Close?.Invoke();
             }
         }
@@ -79,7 +82,7 @@ namespace OrganizaceTurnaje.ViewModel
         private bool CanEndTournament()
         {
             var result = Rounds.Where(x =>
-             x.PlayerAPoints == null && x.PlayerBPoints == null
+             x.PlayerAPoints == null || x.PlayerBPoints == null
             ).ToList();
 
             return !result.Any();
@@ -156,6 +159,7 @@ namespace OrganizaceTurnaje.ViewModel
                 MessageBox.Show("Vítězem turnaje se stává: " + message, "Vítěz", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             canFinish = true;
+            FinishTournament.RaiseCanExecuteChanged();
         }
 
         private void CreateRounds()
@@ -206,7 +210,7 @@ namespace OrganizaceTurnaje.ViewModel
                 }
                 else
                 {
-                    result.Add(new PlayerScorePair() { PlayerPair = round.PlayerA, Score = round.PlayerAPoints });
+                    result.Add(new PlayerScorePair() { PlayerPair = round.PlayerA, Score = round.PlayerAPoints, Tournament = Tournament });
                 }
 
                 if (result.Contains(new PlayerScorePair() { PlayerPair = round.PlayerB }))
@@ -215,7 +219,7 @@ namespace OrganizaceTurnaje.ViewModel
                 }
                 else
                 {
-                    result.Add(new PlayerScorePair() { PlayerPair = round.PlayerB, Score = round.PlayerBPoints });
+                    result.Add(new PlayerScorePair() { PlayerPair = round.PlayerB, Score = round.PlayerBPoints, Tournament = Tournament });
                 }
             }
             var sortedList = result.OrderByDescending(x => x.Score).ToList();

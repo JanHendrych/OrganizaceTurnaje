@@ -8,6 +8,7 @@ namespace OrganizaceTurnaje.Model
     {
         public Player? PlayerPair { get; set; }
         public int? Score { get; set; } = 0;
+        public Tournament Tournament { get; set; }
 
         public override bool Equals(object? obj)
         {
