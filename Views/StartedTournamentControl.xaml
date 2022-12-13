@@ -8,29 +8,38 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Cursor" Value="Hand"></Setter>
+        </Style>
+        <Style TargetType="ListBox">
+            <Setter Property="Background" Value="#FFC5FBE4"></Setter>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="#FFE5FFF4"></Setter>
+        </Style>
         <DataTemplate DataType = "{x:Type data:Round}">
             <StackPanel Orientation = "Horizontal">
-                <TextBlock Text = "{Binding PlayerA, Mode = OneWay}" Width = "100" Margin = "3 5 3 5"/>
+                <TextBlock Text = "{Binding PlayerA, Mode = OneWay}" Width = "160" Margin = "3 5 3 5"/>
 
                 <TextBox Text = "{Binding PlayerAPoints, Mode = TwoWay}" Width = "32" Margin = "3 5 3 5"/>
-                <TextBox Text = ":" Width = "16" Margin = "3 5 3 5"/>
+                <TextBlock Text = ":" Width = "16" Margin = "3 5 3 5"/>
                 <TextBox Text = "{Binding PlayerBPoints, Mode = TwoWay}" Width = "32" Margin = "3 5 3 5"/>
 
-                <TextBlock Text = "{Binding PlayerB, Mode = OneWay}" Width = "100" Margin = "3 5 3 5"/>
+                <TextBlock Text = "{Binding PlayerB, Mode = OneWay}" Width = "160" Margin = "3 5 3 5"/>
             </StackPanel>
         </DataTemplate>
         <DataTemplate DataType = "{x:Type data:Score}">
             <StackPanel Orientation = "Horizontal">
-                <TextBlock Text = "{Binding Player, Mode = OneWay}" Width = "100" Margin = "3 5 3 5"/>
+                <TextBlock Text = "{Binding Player, Mode = OneWay}" Width = "160" Margin = "3 5 3 5"/>
 
-                <TextBlock Text = "{Binding Points, Mode = OneWay}" Width = "100" Margin = "3 5 3 5"/>
+                <TextBlock Text = "{Binding Points, Mode = OneWay}" Width = "160" Margin = "3 5 3 5"/>
             </StackPanel>
         </DataTemplate>
         <DataTemplate DataType = "{x:Type data:PlayerScorePair}">
             <StackPanel Orientation = "Horizontal">
-                <TextBlock Text = "{Binding PlayerPair, Mode = OneWay}" Width = "100" Margin = "3 5 3 5"/>
+                <TextBlock Text = "{Binding PlayerPair, Mode = OneWay}" Width = "160" Margin = "3 5 3 5"/>
 
-                <TextBlock Text = "{Binding Score, Mode = OneWay}" Width = "100" Margin = "3 5 3 5"/>
+                <TextBlock Text = "{Binding Score, Mode = OneWay}" Width = "160" Margin = "3 5 3 5"/>
             </StackPanel>
         </DataTemplate>
 
@@ -40,26 +49,27 @@
                     <Setter Property="IsSelected" Value="true" />
                 </Trigger>
             </Style.Triggers>
+            <Setter Property="Background" Value="#FFC5FBE4"></Setter>
         </Style>
     </UserControl.Resources>
 
-    <StackPanel Orientation="Horizontal">
-        <StackPanel Orientation="Vertical">
+    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <StackPanel Orientation="Vertical" Margin="20,0,20,0">
             <TextBlock Text="Hráči:"></TextBlock>
             <ListBox ItemsSource="{Binding Players}"></ListBox>
         </StackPanel>
-        <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Vertical" Margin="20,0,20,0">
             <TextBlock Text="Kola:"></TextBlock>
             <ListBox ItemsSource="{Binding Rounds}" SelectedItem="{Binding SelectedRound}"></ListBox>
         </StackPanel>
-        <StackPanel Orientation="Vertical">
-            <Button Command="{Binding EndTournamentCommand}" Content="Vyhodnotit turnaj"></Button>
+        <StackPanel VerticalAlignment="Center" Orientation="Vertical" Margin="20,0,20,0">
+            <Button Command="{Binding EndTournamentCommand}" Content="Vyhodnotit turnaj" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" Padding="6,4,6,4"></Button>
         </StackPanel>
-        <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Vertical" Margin="20,0,20,0">
             <TextBlock Text="Počet výher:"></TextBlock>
             <ListBox ItemsSource="{Binding Scores}"></ListBox>
         </StackPanel>
-        <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Vertical" Margin="20,0,20,0">
             <TextBlock Text="Počet Bodů:"></TextBlock>
             <ListBox ItemsSource="{Binding Points}"></ListBox>
         </StackPanel>

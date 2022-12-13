@@ -9,40 +9,62 @@
         mc:Ignorable="d">
 
     <UserControl.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Cursor" Value="Hand"></Setter>
+        </Style>
+        <Style TargetType="ListBox">
+            <Setter Property="Background" Value="#FFE5FFF4"></Setter>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        <Style TargetType="ListBoxItem">
+            <Setter Property="Background" Value="#FFC5FBE4"></Setter>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="10,5,10,5"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="#FFE5FFF4"></Setter>
+            <Setter Property="Padding" Value="5,2,5,2"/>
+        </Style>
+
         <DataTemplate DataType = "{x:Type data:Tournament}">
 
             <StackPanel Orientation = "Horizontal">
                 <TextBox Text = "{Binding Path = Name, Mode = TwoWay}" Width = "100" Margin = "3 5 3 5"/>
 
-                <ListBox  ItemsSource="{Binding Path = Players}">
+                <ListBox Background="#FFC5FBE4" ItemsSource="{Binding Path = Players}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding}" />
+                            <TextBlock Width="160" Text="{Binding}" />
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
             </StackPanel>
 
         </DataTemplate>
-
-        
     </UserControl.Resources>
     
-    <StackPanel Orientation = "Horizontal">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
         
-        <StackPanel Orientation = "Vertical">
+        <StackPanel Grid.Column="0" Orientation = "Vertical">
             <ListBox ItemsSource = "{Binding Tournaments}" SelectedItem = "{Binding SelectedTournament}"/>
         </StackPanel>
         
-        <StackPanel Orientation = "Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" >
+        <StackPanel Grid.Column="1" Orientation = "Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" >
             <Button Command="{Binding NewTournamentCommand}" Content="Vytvořit nový turnaj" Width="150" Margin="10,10,10,10" Padding="0,4,0,4" FontSize="14"/>
             <Button Command="{Binding DeleteTournamentCommand}" Content="Smazat turnaj" Width="150" Margin="10,10,10,10" Padding="0,4,0,4" FontSize="14" Background="#FFFF8181"/>
             <Button Command="{Binding ShowTournamentCommand}" Content="Zobraz Turnaj" Width="150" Margin="10,10,10,10" Padding="0,4,0,4" FontSize="14"/>
-            <Button Command="{Binding SaveTournamentsCommand}" Content="Uložit" Width="150" Margin="10,10,10,10" Padding="0,4,0,4" FontSize="14"/>
-            <Button Command="{Binding LoadTournamentsCommand}" Content="Načíst" Width="150" Margin="10,10,10,10" Padding="0,4,0,4" FontSize="14"/>
             <Button Command="{Binding StartTournamentCommand}" Content="Odstartuj turnaj" Width="150" Margin="10,10,10,10" Padding="0,4,0,4" FontSize="14" Background="#FF96FF81"/>
             <Button Command="{Binding ShowResultsCommand}" Content="Zobraz výsledky" Width="150" Margin="10,10,10,10" Padding="0,4,0,4" FontSize="14" Background="#FF81A0FF"/>
+            
+            <StackPanel Margin="0,20,0,0" Orientation="Vertical">
+                <Button Command="{Binding SaveTournamentsCommand}" Content="Uložit" Width="100" Margin="10,10,10,10" Padding="0,4,0,4" FontSize="14"/>
+                <Button Command="{Binding LoadTournamentsCommand}" Content="Načíst" Width="100" Margin="10,10,10,10" Padding="0,4,0,4" FontSize="14"/>
+            </StackPanel>
         </StackPanel>
 
-    </StackPanel>
+    </Grid>
 </UserControl>

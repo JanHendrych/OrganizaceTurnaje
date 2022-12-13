@@ -6,7 +6,13 @@
         xmlns:local="clr-namespace:OrganizaceTurnaje"
         xmlns:views = "clr-namespace:OrganizaceTurnaje.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="600">
+        Title="Hlavní okno" Height="700" Width="750"
+        Background="#FFE5FFF4">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Cursor" Value="Hand"></Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
         <views:MainView x:Name = "MainViewControl"/>
     </Grid>

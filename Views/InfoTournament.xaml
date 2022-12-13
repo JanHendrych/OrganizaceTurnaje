@@ -7,16 +7,22 @@
         xmlns:local="clr-namespace:OrganizaceTurnaje.Views"
         xmlns:uc="clr-namespace:OrganizaceTurnaje.Views"
         mc:Ignorable="d"
-        Title="InfoTournament" Height="450" Width="450">
+        Title="Informace" Height="450" Width="450"
+        Background="#FFE5FFF4">
+
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Cursor" Value="Hand"></Setter>
+        </Style>
+    </Window.Resources>
+    
     <Grid>
         <uc:InfoTournamentControl />
         <Button Content="Potvrdit" 
-                Height="30" 
-                Width="100" 
                 Margin="10,10,10,10" 
                 IsCancel="True" 
                 VerticalAlignment="Bottom" 
                 HorizontalAlignment="Center"
-                Command="{Binding OnConfirmChanges}" />
+                Command="{Binding OnConfirmChanges}" Padding="6,4,6,4" FontSize="14" />
     </Grid>
 </Window>

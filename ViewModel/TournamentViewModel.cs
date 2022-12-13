@@ -122,6 +122,10 @@ namespace OrganizaceTurnaje.ViewModel
 
         private bool CanDelete()
         {
+            if (SelectedTournament is not null && SelectedTournament.IsStarted)
+            {
+                return false;
+            }
             return SelectedTournament != null;
         }
 

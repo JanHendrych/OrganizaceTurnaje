@@ -6,12 +6,20 @@
         xmlns:local="clr-namespace:OrganizaceTurnaje.Views"
         xmlns:uc="clr-namespace:OrganizaceTurnaje.Views"
         mc:Ignorable="d"
-        Title="StartedTournament"
+        Title="Odstartovaný turnaj"
         WindowState="Maximized"
         WindowStyle="SingleBorderWindow"
-        x:Name="startedTournament">
-    <StackPanel Orientation="Horizontal">
+        x:Name="startedTournament"
+        Background="#FFE5FFF4">
+
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Cursor" Value="Hand"></Setter>
+        </Style>
+    </Window.Resources>
+    
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
         <uc:StartedTournamentControl />
-        <Button Command="{Binding FinishTournament}" Content="Ukonči turnaj"></Button>
+        <Button Command="{Binding FinishTournament}" Content="Ukonči turnaj" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" Padding="6,4,6,4"></Button>
     </StackPanel>
 </Window>
